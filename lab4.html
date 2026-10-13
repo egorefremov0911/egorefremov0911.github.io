@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC 225 - Lab 4 Ordering Website</title>
+</head>
+
+<body>
+
+    <h1>Welcome to Store!</h1>
+
+    <div id="orderDetails">
+        <p>Your order information will appear here.</p>
+    </div>
+
+    <script>
+
+        alert("Welcome to Store!");
+
+        let customerName = prompt("What is your name?");
+        let itemName = prompt("What item would you like to order?");
+        let quantity = prompt("How many items would you like to order? (1-99)");
+
+
+        quantity = Number(quantity);
+
+        if (
+            customerName === null ||
+            itemName === null ||
+            customerName.trim() === "" ||
+            itemName.trim() === "" ||
+            !Number.isInteger(quantity) ||
+            quantity < 1 ||
+            quantity > 99
+        ) {
+            document.getElementById("orderDetails").innerHTML =
+                "<h2>Order not completed</h2>" +
+                "<p>Please refresh the page and enter a valid name, item, and quantity from 1 to 99.</p>";
+        } else {
+
+            let currentDate = new Date();
+            let currentHour = currentDate.getHours();
+            let greeting;
+
+            if (currentHour < 12) {
+                greeting = "Good Morning";
+            } else if (currentHour < 17) {
+                greeting = "Good Afternoon";
+            } else {
+                greeting = "Good Evening";
+            }
+
+            let arrivalDate = new Date(currentDate);
+            arrivalDate.setDate(arrivalDate.getDate() + 7);
+
+            let formattedArrivalDate = arrivalDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+
+            document.getElementById("orderDetails").innerHTML =
+                "<h2>" + greeting + " " + customerName + ", thank you for ordering!</h2>" +
+                "<p><strong>Customer Name:</strong> " + customerName + "</p>" +
+                "<p><strong>Item Ordered:</strong> " + itemName + "</p>" +
+                "<p><strong>Quantity:</strong> " + quantity + "</p>" +
+                "<p><strong>Order Date:</strong> " +
+                currentDate.toLocaleDateString("en-US") + "</p>" +
+                "<p><strong>Expected Arrival Date:</strong> " +
+                formattedArrivalDate + "</p>";
+        }
+    </script>
+
+</body>
+
+</html>
