@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration Page</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>Registration</h1>
+        <p>Create your account</p>
+    </div>
+
+    <form id="registrationForm">
+
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text"
+                   class="form-control"
+                   id="firstName">
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text"
+                   class="form-control"
+                   id="lastName">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email"
+                   class="form-control"
+                   id="email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password"
+                   class="form-control"
+                   id="password">
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date"
+                   class="form-control"
+                   id="dob">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Register
+        </button>
+
+    </form>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        let firstName = document.getElementById("firstName").value.trim();
+        let lastName = document.getElementById("lastName").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("password").value;
+        let dateOfBirth = document.getElementById("dob").value;
+
+        let user = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            dateOfBirth: dateOfBirth
+        };
+
+        let allFieldsPresent =
+            firstName !== "" &&
+            lastName !== "" &&
+            email !== "" &&
+            password !== "" &&
+            dateOfBirth !== "";
+
+        let passwordIsValid =
+            password.includes("!") || password.includes("?");
+
+        let hiddenPassword = "*".repeat(password.length);
+
+        let result = document.getElementById("result");
+
+        if (allFieldsPresent && passwordIsValid) {
+
+            result.innerHTML =
+                "<div class='alert alert-success'>" +
+                "<h2>Registration Successful!</h2>" +
+                "<p><strong>First Name:</strong> " + user.firstName + "</p>" +
+                "<p><strong>Last Name:</strong> " + user.lastName + "</p>" +
+                "<p><strong>Email Address:</strong> " + user.email + "</p>" +
+                "<p><strong>Password:</strong> " + hiddenPassword + "</p>" +
+                "<p><strong>Date of Birth:</strong> " + user.dateOfBirth + "</p>" +
+                "</div>";
+
+        }
+
+        else {
+
+            let message = "";
+
+            if (!allFieldsPresent) {
+                message += "<p>All fields must be completed.</p>";
+            }
+
+            if (!passwordIsValid) {
+                message += "<p>Password must contain a special character: ! or ?</p>";
+            }
+
+            result.innerHTML =
+                "<div class='alert alert-danger'>" +
+                "<h2>Registration Failed!</h2>" +
+                message +
+                "</div>";
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
